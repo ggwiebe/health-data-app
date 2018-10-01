@@ -1,0 +1,98 @@
+<h1>{{ title }}</h1>
+<h2>{{ description }}</h2>
+
+{{#if username}}
+  <h3>Welcome {{ username }}.</h3>
+{{ else }}
+  <h3>Welcome anonymous.</h3>
+{{/if}}
+
+{{#if sessionid}}
+  <h3>Cookie {{ sessionid }}.</h3>
+
+  {{#if tokenstatus}}
+    <h3>Fitbit token in place!</h3>
+  {{ else }}
+    <h3>No Fitbit token!!!!</h3>
+    <a href="https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22D7BZ&redirect_uri=http://localhost:3000/fitbit/oauth/redirect&code_challenge_method=S256&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight">Login with Fitbit</a>
+    <br></br>
+  {{/if}}
+
+{{ else }}
+  <h3>No session!!!!</h3>
+{{/if}}
+
+{{# if success }}
+    <section class="success">
+        <h2>Successful Validation!</h2>
+        <p>Start date: {{ startdate }}</p>
+        <p>End date: {{ enddate}}</p>
+    </section>
+{{ else }}
+  {{# if errors }}
+      <section class="errors">
+          <ul>
+              {{# each errors }}
+                  <li>{{ this.msg }}</li>
+              {{/each}}
+          </ul>
+      </section>
+  {{/if}}
+  <!--<form action="/fitbit/get-activities" method="get" target="/"> -->
+  <form action="/submit" method="post">
+    <div class="input">
+      <label for="startdate">Start Date</label>
+      <input type="text" id="startdate" name="startdate"/>
+    </div>
+    <div class="input">
+      <label for="enddate">End Date</label>
+      <input type="text" id="enddate" name="enddate"/>
+    </div>
+    <button type="submit">Submit date range</button>
+  </form>
+{{/if}}
+
+{{# if hractivitydate }}
+    <h2>Successful data retrieval!!!</h2>
+    <h3>HR Data retrieved for {{ this.hractivitydate }} </h3>
+
+    <section class="hractivity">
+        <br></br>
+        <div>
+            {{# each hractivity }}
+                <article class="item">
+                    <div>name: {{ this.name }}</div>
+                    <!--<div>accessLevel: {{ this.accessLevel }}</div>
+                      <div>id: {{ this.id }}</div>
+                      <div>hasSpeed: {{ this.hasSpeed }}</div>
+                      <div>activityLevels: {{ this.activityLevels }}</div>
+                    -->
+                    <div>min: {{ this.min }}</div>
+                    <div>max: {{ this.max }}</div>
+                    <div>minutes: {{ this.minutes }}</div>
+                    <div>caloriesOut: {{ this.caloriesOut }}</div>
+                </article>
+            {{/each}}
+        </div>
+    </section>
+
+    <section class="hractivityintraday">
+      <div>
+        <h3>HeartRate Intraday Dataset Type: {{hractivityintradaydatasettype}}</h3>
+        <h3>[Interval = {{hractivityintradayinterval}} ]</h3>
+        <table style="width:200">
+          <tr>
+            <th>Time:</th>
+            <th>Rate(bpm):</th>
+          </tr>
+          {{# each hractivityintraday }}
+            <tr class="item">
+              <td>{{ this.time }}</td>
+              <td>{{ this.value }}</td>
+            </tr>
+          {{/each}}
+        </table>
+      </div>
+    </section>
+{{ else }}
+{{/if}}
