@@ -1,0 +1,110 @@
+body {
+  padding: 50px;
+  font: 14px "Roboto", Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.input label {
+  display: block;
+}
+
+form button {
+  font: inherit;
+  margin: 10px 0;
+  border-radius: 0;
+  border: none;
+  box-shadow: 2px 2px 2px #ccc;
+  color: white;
+  background: #3498db;
+  cursor: pointer;
+}
+
+form button:hover {
+  background: #2980b9;
+}
+
+.item {
+  margin: 10px 0;
+  padding: 2px;
+  background: #95a5a6;
+  border: 1px solid black;
+}
+
+section {
+  /*float: left;
+  /*background: #bdc3c7;*/
+  background: Gainsboro;
+  box-shadow: 3px 3px 1px Gray;
+  padding: 5px;
+  margin: 10px;
+  width: 300px;
+  box-shadow: 3px 3px 1px Gray;
+  min-height: 300px;
+}
+
+section:first-of-type {
+  margin-left: 0;
+}
+
+section:last-of-type {
+  margin-right: 0;
+}
+
+section h3 {
+  border-bottom: 1px solid black;
+  padding-bottom: 5px;
+}
+
+.success {
+  left;
+  background: LightCyan;
+  padding: 2px;
+  width: 200px;
+  min-height: 100px;
+}
+
+.errors {
+  left;
+  background: #e79892;
+  padding: 5px;
+  margin-bottom: 10px;
+  min-width: 200px;
+  min-height: 100px;
+  display: inline-block;
+  border: 1px solid #e74c3c;
+}
+
+.errors ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hractivity {
+  float: left;
+  background: AliceBlue;
+  width: 500px;
+}
+
+.hractivityintraday {
+  float: left;
+  background: LavenderBlush;
+  width: 800px;
+}
+
+.update {
+  background: #3498db;
+}
+
+.delete {
+  background: #e74c3c;
+}
+
+.input label {
+  display: block;
+  font-weight: bold;
+  padding: 2px 0;
+}

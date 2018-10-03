@@ -14,6 +14,7 @@ var logger = winston.createLogger({
   ],
   exitOnError: false, // do not exit on handled exceptions
 });
+var config = require('../config/config.js').get(process.env.NODE_ENV);
 
 
 var sess;
@@ -33,6 +34,7 @@ router.get('/', function(req, res, next) {
     startdate: req.session.startdate,
     enddate: req.session.enddate,
     sessionid: req.session.id,
+    fitbiturl: `${config.Fitbit.authURL}&client_id=${config.Fitbit.clientId}&redirect_uri=${config.Fitbit.callbackURL}&scope=${config.Fitbit.scope}`,
     tokenstatus: tokenStatus
   });
   req.session.errors = null;

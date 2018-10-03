@@ -125,7 +125,7 @@ router.get('/get-activities', (req, res, next) => {
   //                                   https://api.fitbit.com/1/user/4MCDD3/activities/heart/date/2018-09-01/1d/1min.json
   //                                                         /1/user/4MCDD3/activities/heart/date/2018-09-01/1d/1min.json
   //                                   https://api.fitbit.com/1/user/4MCDD3/activities/heart/date/2018-09-01/1d/1min.json
-  // When we added validation, the startdate & enddate moved into session variables. 
+  // When we added validation, the startdate & enddate moved into session variables.
   //let requestUrl =  `${config.Fitbit.resourceURLBase}user/${accessUser}/activities/heart/date/${req.query.startdate}/1d/1min.json` // when using GET
   let requestUrl =  `${config.Fitbit.resourceURLBase}user/${accessUser}/activities/heart/date/${req.session.startdate}/1d/1min.json` // when using GET
   //let requestUrl =  `${config.Fitbit.resourceURLBase}user/${accessUser}/activities/heart/date/${req.body.startdate}/1d/1min.json` // when using POST
@@ -162,6 +162,7 @@ router.get('/get-activities', (req, res, next) => {
       enddate: req.session.enddate,
       sessionid: req.session.id,
       //activitydata: response.data.categories,
+      fitbiturl: `${config.Fitbit.authURL}?client_id=${config.Fitbit.clientId}&redirect_uri=${config.Fitbit.callbackURL}&scope=${config.Fitbit.scope}`,
       hractivitydate: response.data['activities-heart'][0].dateTime,
       hractivity: response.data['activities-heart'][0].value.heartRateZones,
       hractivityintradaydatasettype: response.data['activities-heart-intraday'].datasetType,

@@ -14,7 +14,7 @@
     <h3>Fitbit token in place!</h3>
   {{ else }}
     <h3>No Fitbit token!!!!</h3>
-    <a href="https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22D7BZ&redirect_uri=http://localhost:3000/fitbit/oauth/redirect&code_challenge_method=S256&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight">Login with Fitbit</a>
+    <a href="{{fitbiturl}}">Login with Fitbit</a>
     <br></br>
   {{/if}}
 
@@ -24,7 +24,7 @@
 
 {{# if success }}
     <section class="success">
-        <h2>Successful Validation!</h2>
+        <h3>Successful Validation!</h3>
         <p>Start date: {{ startdate }}</p>
         <p>End date: {{ enddate}}</p>
     </section>
@@ -38,6 +38,7 @@
           </ul>
       </section>
   {{/if}}
+
   <!--<form action="/fitbit/get-activities" method="get" target="/"> -->
   <form action="/submit" method="post">
     <div class="input">
@@ -52,12 +53,12 @@
   </form>
 {{/if}}
 
-{{# if hractivitydate }}
-    <h2>Successful data retrieval!!!</h2>
-    <h3>HR Data retrieved for {{ this.hractivitydate }} </h3>
+<p></p>
 
+{{# if hractivitydate }}
     <section class="hractivity">
-        <br></br>
+      <!--
+      <h3>HR Data retrieved for {{ this.hractivitydate }} </h3>
         <div>
             {{# each hractivity }}
                 <article class="item">
@@ -66,7 +67,7 @@
                       <div>id: {{ this.id }}</div>
                       <div>hasSpeed: {{ this.hasSpeed }}</div>
                       <div>activityLevels: {{ this.activityLevels }}</div>
-                    -->
+                    - - >
                     <div>min: {{ this.min }}</div>
                     <div>max: {{ this.max }}</div>
                     <div>minutes: {{ this.minutes }}</div>
@@ -74,10 +75,53 @@
                 </article>
             {{/each}}
         </div>
+      -->
+      <div class="container">
+        <canvas id="hrChart"></canvas>
+      </div>
+
+      <script>
+        let hrChart = document.getElementById('hrChart').getContext('2d');
+
+        //borderColor: 'blue',
+        var hrActData = {
+          labels: [
+            {{# each hractivity }}
+              '{{ this.name }}',
+            {{/each}}
+          ],
+          datasets: [
+            {
+              label: 'minutes',
+              backgroundColor: 'blue',
+              data: [
+                {{# each hractivity }}
+                  {{ this.minutes }},
+                {{/each}}
+              ]
+            },
+            {
+              label: 'caloriesOut',
+              backgroundColor: 'green',
+              data: [
+                {{# each hractivity }}
+                  {{ this.caloriesOut }},
+                {{/each}}
+              ]
+            }
+          ]
+        };
+
+        let hraChart = new Chart(hrChart, {
+          type: 'bar',
+          data: hrActData,
+          }
+        )
+      </script>
     </section>
 
     <section class="hractivityintraday">
-      <div>
+      <!--<div>
         <h3>HeartRate Intraday Dataset Type: {{hractivityintradaydatasettype}}</h3>
         <h3>[Interval = {{hractivityintradayinterval}} ]</h3>
         <table style="width:200">
@@ -85,14 +129,44 @@
             <th>Time:</th>
             <th>Rate(bpm):</th>
           </tr>
-          {{# each hractivityintraday }}
+          \{ {# each hractivityintraday } }
             <tr class="item">
               <td>{{ this.time }}</td>
               <td>{{ this.value }}</td>
             </tr>
-          {{/each}}
+          \{ {/each} }
         </table>
+      </div>-->
+
+      <div class="container">
+        <canvas id="hrintraChart"></canvas>
       </div>
+      <script>
+        let hrintraChart = document.getElementById('hrintraChart').getContext('2d');
+
+        var hriaTS = {
+          label: 'HR Intraday Activity',
+          borderColor: 'green',
+          borderWidth: 1,
+          pointRadius: 1,
+          data: [
+            {{# each hractivityintraday }}
+              { x: '{{ ../hractivitydate }} {{ this.time }}' , y: {{ this.value }} },
+            {{/each}}
+          ]
+        };
+        let hriaChart = new Chart(hrintraChart, {
+          type: 'line',
+          data: { datasets: [hriaTS] },
+          options: {
+            scales: {
+              xAxes: [{
+                type: 'time'
+              }]
+            }
+          }
+        })
+      </script>
     </section>
 {{ else }}
 {{/if}}
