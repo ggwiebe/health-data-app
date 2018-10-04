@@ -1,6 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
+// get runtime configuration
+var config = require('../config/config.js').get(process.env.NODE_ENV);
+
+// setup logging
 const expressWinston = require('express-winston');
 const winston = require('winston');
 const level = process.env.LOG_LEVEL || 'debug';
@@ -16,8 +20,6 @@ var logger = winston.createLogger({
 var accessToken;
 var accessUser;
 
-var config = require('../config/config.js').get(process.env.NODE_ENV);
-// Import querystring handler qs from 'qs'
 const qs = require('qs')
 // Import the axios library, to make HTTP requests
 const axios = require('axios')
@@ -155,6 +157,7 @@ router.get('/get-activities', (req, res, next) => {
     res.render('index', {
       title: 'Health Data App',
       description: 'App to work with Fitbit and DynamoDB',
+      userid: 'ggwiebe',
       username: req.session.username,
       success: req.session.success,
       errors: req.session.errors,

@@ -31,8 +31,9 @@ var expressValidator = require('express-validator');
 var expressSession = require('express-session');
 
 
-var indexroutes  = require('./routes/index');
-var fitbitroutes = require('./routes/fitbit');
+var indexroutes     = require('./routes/index');
+var fitbitroutes    = require('./routes/fitbit');
+var datastoreroutes = require('./routes/datastore');
 
 var app = express();
 tokenStatus = false;
@@ -55,8 +56,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({secret: 'glenn', saveUnitialized: false, resave: false}));
 
 logger.debug('app setup routes...');
-app.use('/',       indexroutes);
-app.use('/fitbit', fitbitroutes);
+app.use('/'         , indexroutes);
+app.use('/fitbit'   , fitbitroutes);
+app.use('/datastore', datastoreroutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
