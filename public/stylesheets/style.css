@@ -60,7 +60,7 @@ section h3 {
 
 .success {
   left;
-  background: LightCyan;
+  background: rgb(240, 248, 255, 0.7);
   padding: 2px;
   width: 200px;
   min-height: 100px;
@@ -85,14 +85,14 @@ section h3 {
 
 .hractivity {
   float: left;
-  background: AliceBlue;
-  width: 500px;
+  background: rgb(240, 248, 255, 0.7);
+  width: 760px;
 }
 
 .hractivityintraday {
   float: left;
-  background: LavenderBlush;
-  width: 800px;
+  background: rgb(240, 248, 255, 0.7);
+  width: 760px;
 }
 
 .update {
